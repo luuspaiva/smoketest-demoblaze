@@ -1,3 +1,5 @@
+import { faker } from "@faker-js/faker";
+
 describe("Smoke Test - DemoBlaze.com", () => {
   beforeEach(() => {
     cy.visit("/");
@@ -101,27 +103,31 @@ describe("Smoke Test - DemoBlaze.com", () => {
     });
   });
 
-  it.only("Deve realizar a compra de um produto", () => {
+ it.only("Deve realizar a compra de um produto com dados gerados pelo Faker", () => {
     cy.fixture("user.json").then((users) => {
       const user = users.validUser;
 
       cy.login(user.username, user.password);
-
       cy.get("#cartur").click();
 
-      //cy.get('.success').should('be.visible');
-
       cy.get(".btn-success").contains("Place Order").click();
-      cy.wait(1000);
 
-      cy.get("#name").type("Teste");
-      cy.get("#country").type("Brasil");
-      cy.get("#city").type("São Paulo");
-      cy.get("#card").type("1234 5678 9012 3456");
-      cy.get("#month").type("12");
-      cy.get("#year").type("2025");
+      const userName = faker.person.fullName();
+      const country = faker.location.country();
+      const city = faker.location.city();
+      const cardNumber = faker.finance.creditCardNumber('####-####-####-####');
+      const month = faker.date.month();
+      const year = faker.date.future().getFullYear().toString();
+
+      cy.get("#name").type(userName);
+      cy.get("#country").type(country);
+      cy.get("#city").type(city);
+      cy.get("#card").type(cardNumber);
+      cy.get("#month").type(month);
+      cy.get("#year").type(year);
 
       cy.get(".btn-primary").contains("Purchase").click();
+
       cy.get(".sweet-alert", { timeout: 10000 }).should("be.visible");
     });
   });
