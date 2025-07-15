@@ -82,11 +82,7 @@ package.json
 
 ## 🧠 Melhorias futuras
 
-- 🔍 Adição de testes de **acessibilidade** com `cypress-axe`
 - 📸 Captura de **evidências visuais** por screenshot
-- 🔐 Testes negativos de autenticação
-- Adição de produto ao carrinho
-- Realizar a compra do produto
 
 ---
 
